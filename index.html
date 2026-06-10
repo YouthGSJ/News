@@ -151,7 +151,7 @@ footer{
 <script>
 
 const rss =
-"https://api.rss2json.com/v1/api.json?rss_url=https://www.cnnindonesia.com/nasional/rss";
+"https://www.cnnindonesia.com/nasional/rss";
 
 fetch(
 `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`
@@ -199,8 +199,10 @@ fetch(
 
 .catch(error=>{
 
+    console.error(error);
+
     document.getElementById('loading').innerHTML=
-    "Gagal memuat berita.";
+    "Gagal memuat berita. Cek Console (F12).";
 
 });
 
