@@ -1,303 +1,769 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>News Youth GSJ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News GSJ V2</title>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #111;
+            --dark-secondary: #0b0b0b;
+            --border: rgba(255, 255, 255, 0.08);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark-bg);
+            color: white;
+        }
 
-body{
-    margin:0;
-    font-family:Poppins;
-    background:#0f0f0f;
-    color:white;
-}
+        /* HEADER */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: var(--dark-secondary);
+            border-bottom: 1px solid var(--border);
+        }
 
-/* HEADER */
-header{
-    padding:20px 8%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:#111;
-}
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+        }
 
-header a{
-    color:white;
-    text-decoration:none;
-    margin-left:15px;
-    font-size:14px;
-    opacity:0.8;
-}
+        .back-home {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
 
-header a:hover{
-    opacity:1;
-}
+        .back-home:hover {
+            color: var(--gold);
+        }
 
-/* GRID NEWS */
-.container{
-    padding:40px 8%;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
-}
+        /* HERO SECTION */
+        .hero {
+            position: relative;
+            height: 70vh;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
 
-/* CARD */
-.card{
-    background:#1a1a1a;
-    border-radius:16px;
-    overflow:hidden;
-    cursor:pointer;
-    transition:0.3s;
-}
+        .hero img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            inset: 0;
+        }
 
-.card:hover{
-    transform:translateY(-5px);
-}
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.9) 100%);
+        }
 
-.card img{
-    width:100%;
-    height:180px;
-    object-fit:cover;
-}
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            padding: 60px 8% 40px;
+            max-width: 1200px;
+            width: 100%;
+        }
 
-.card-content{
-    padding:15px;
-}
+        .hero-badge {
+            display: inline-block;
+            background: var(--gold);
+            color: black;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
 
-.card h3{
-    margin:0;
-    font-size:18px;
-}
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
 
-.card p{
-    font-size:13px;
-    opacity:0.7;
-}
+        .hero-desc {
+            font-size: 18px;
+            color: #ddd;
+            max-width: 600px;
+        }
 
-/* DETAIL VIEW */
-.detail{
-    display:none;
-    padding:40px 8%;
-}
+        /* SEARCH SECTION */
+        .search-section {
+            padding: 40px 8%;
+            text-align: center;
+        }
 
-.detail img,
-.detail iframe{
-    width:100%;
-    border-radius:12px;
-    margin-top:15px;
-}
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-.back{
-    display:inline-block;
-    margin-bottom:20px;
-    cursor:pointer;
-    color:#d39c2f;
-}
+        .search-box input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
 
-/* ADMIN (HIDDEN) */
-.admin{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,.85);
-    justify-content:center;
-    align-items:center;
-}
+        .search-box input::placeholder {
+            color: #777;
+        }
 
-.admin-box{
-    background:white;
-    color:black;
-    padding:20px;
-    width:320px;
-    border-radius:12px;
-}
+        .search-box input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--gold);
+        }
 
-input,textarea{
-    width:100%;
-    margin:8px 0;
-    padding:10px;
-}
+        /* CATEGORIES */
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 0 8% 40px;
+        }
 
-button{
-    width:100%;
-    padding:10px;
-    background:#111;
-    color:white;
-    border:none;
-    margin-top:5px;
-}
+        .categories button {
+            padding: 10px 20px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
 
-/* FAB ADMIN BUTTON (hidden via URL) */
-.fab{
-    position:fixed;
-    bottom:20px;
-    right:20px;
-    background:#d39c2f;
-    padding:12px 18px;
-    border-radius:50px;
-    cursor:pointer;
-    display:none;
-}
+        .categories button:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
 
-</style>
+        .categories button.active {
+            background: var(--gold);
+            color: black;
+            border-color: var(--gold);
+        }
+
+        /* NEWS GRID */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 0 8% 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .news-card {
+            background: #1a1a1a;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .news-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 20px;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .news-date {
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+
+        .news-text {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ddd;
+            margin-bottom: 15px;
+        }
+
+        .read-more {
+            color: var(--gold);
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .news-card:hover .read-more {
+            transform: translateX(5px);
+        }
+
+        /* DETAIL ARTICLE */
+        .article-page {
+            display: none;
+            padding: 60px 8% 100px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .article-back {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: var(--gold);
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .article-back:hover {
+            transform: translateX(-5px);
+        }
+
+        .article-title {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 15px;
+        }
+
+        .article-meta {
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        .article-cover {
+            width: 100%;
+            border-radius: 24px;
+            margin-bottom: 35px;
+            display: block;
+        }
+
+        .article-content {
+            font-size: 17px;
+            line-height: 2;
+            color: #ddd;
+            margin-bottom: 40px;
+        }
+
+        .video-box {
+            margin: 40px 0;
+        }
+
+        .video-box iframe {
+            width: 100%;
+            height: 550px;
+            border: none;
+            border-radius: 20px;
+        }
+
+        .gallery {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 18px;
+        }
+
+        /* ADMIN LOGIN */
+        .admin-login {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            width: 420px;
+            max-width: 95%;
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            border: none;
+            border-radius: 12px;
+            background: #222;
+            color: white;
+            font-family: inherit;
+        }
+
+        .login-box input::placeholder {
+            color: #777;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: var(--gold);
+            color: black;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .login-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ADMIN PANEL */
+        .admin-panel {
+            display: none;
+            padding: 60px 8%;
+            background: var(--dark-secondary);
+            border-top: 1px solid var(--border);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .admin-panel h2 {
+            margin-bottom: 25px;
+            color: var(--gold);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #1c1c1c;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .form-group textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+
+        .save-btn {
+            padding: 15px 30px;
+            background: var(--gold);
+            border: none;
+            border-radius: 14px;
+            color: black;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .save-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 40px;
+            text-align: center;
+            background: var(--dark-secondary);
+            color: #777;
+            border-top: 1px solid var(--border);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero {
+                height: 55vh;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .article-title {
+                font-size: 34px;
+            }
+
+            .video-box iframe {
+                height: 240px;
+            }
+
+            .news-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .categories {
+                gap: 10px;
+            }
+
+            .categories button {
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<header>
-    <h2>NEWS GSJ</h2>
-    <div>
-        <a href="https://youthgsj.github.io/Youth-GSJ/">← Beranda</a>
+    <header>
+        <div class="logo">Berita Germita Syalom Jakarta</div>
+        <a href="https://youthgsj.github.io/Youthweb.html" class="back-home">← Kembali ke Youth GSJ</a>
+    </header>
+
+    <section class="hero">
+        <img src="natal/natal.jpeg" alt="Featured News">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">FEATURED NEWS</div>
+            <h1 class="hero-title">Natal Germita Syalom Jakarta 2025</h1>
+            <p class="hero-desc">Perayaan Natal penuh sukacita bersama seluruh keluarga Germita Syalom Jakarta.</p>
+        </div>
+    </section>
+
+    <section class="search-section">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Cari berita...">
+        </div>
+    </section>
+
+    <section class="categories">
+        <button class="active" data-category="Semua">Semua</button>
+        <button data-category="Natal">Natal</button>
+        <button data-category="Paskah">Paskah</button>
+        <button data-category="Pelayanan">Pelayanan</button>
+        <button data-category="Event">Event</button>
+        <button data-category="Pengumuman">Pengumuman</button>
+    </section>
+
+    <div class="news-grid" id="newsGrid"></div>
+
+    <!-- DETAIL ARTICLE -->
+    <div class="article-page" id="articlePage">
+        <div class="article-back" onclick="backToNews()">← Kembali ke Semua Berita</div>
+        <h1 class="article-title" id="articleTitle"></h1>
+        <div class="article-meta" id="articleMeta"></div>
+        <img id="articleImage" class="article-cover" alt="Article Image">
+        <div id="articleContent" class="article-content"></div>
+        <div class="video-box">
+            <iframe id="articleVideo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="gallery" id="gallery"></div>
     </div>
-</header>
 
-<!-- GRID -->
-<div class="container" id="grid"></div>
-
-<!-- DETAIL -->
-<div class="detail" id="detail">
-    <div class="back" onclick="back()">← Kembali</div>
-    <h1 id="title"></h1>
-    <img id="img">
-    <iframe id="video" frameborder="0" allowfullscreen></iframe>
-    <p id="content"></p>
-
-
-</div>
-
-<!-- ADMIN -->
-<div class="admin" id="admin">
-    <div class="admin-box">
-        <h3>Edit News</h3>
-        <input id="t">
-        <input id="i">
-        <input id="v" placeholder="YouTube embed link">
-        <textarea id="c"></textarea>
-
-        <button onclick="save()">Save</button>
-        <button onclick="closeAdmin()">Close</button>
+    <!-- ADMIN LOGIN -->
+    <div class="admin-login" id="adminLogin">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <input id="adminUser" placeholder="Username">
+            <input type="password" id="adminPass" placeholder="Password">
+            <button class="login-btn" onclick="loginAdmin()">Login</button>
+        </div>
     </div>
-</div>
 
+    <!-- ADMIN PANEL -->
+    <section class="admin-panel" id="adminPanel">
+        <h2>Tambah Berita</h2>
+        <div class="form-group">
+            <label>Judul</label>
+            <input id="newsTitle">
+        </div>
+        <div class="form-group">
+            <label>Kategori</label>
+            <select id="newsCategory">
+                <option>Natal</option>
+                <option>Paskah</option>
+                <option>Pelayanan</option>
+                <option>Event</option>
+                <option>Pengumuman</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Link Foto Cover</label>
+            <input id="newsImage">
+        </div>
+        <div class="form-group">
+            <label>YouTube Embed Link</label>
+            <input id="newsVideo">
+        </div>
+        <div class="form-group">
+            <label>Isi Artikel</label>
+            <textarea id="newsContent"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Galeri Foto</label>
+            <input id="newsGallery" placeholder="Pisahkan dengan koma">
+        </div>
+        <button class="save-btn" onclick="saveNews()">Simpan Berita</button>
+    </section>
 
-<script>
+    <footer>© 2026 Youth Germita Syalom Jakarta</footer>
 
-/* ===== DATABASE ===== */
-let db = JSON.parse(localStorage.getItem("newsDB")) || {
-    natal:{
-        title:"Natal Youth 2026",
-        img:"Natal/natal.jpeg",
-        video:"",
-        content:"Perayaan Natal penuh sukacita bersama Youth GSJ"
-    },
-    retreat:{
-        title:"Paskah 2026",
-        img:"Paskah/paskah.jpeg",
-        video:"",
-        content:"Momen kebersamaan dalam hadirat Tuhan"
-    },
-    komsel:{
-        title:"Mutasi Growth",
-        img:"Pelayanan/mutasi.jpeg",
-        video:"",
-        content:"Belajar firman Tuhan lebih dalam"
-    }
-};
+    <script>
+        /* ========================= DATABASE ========================= */
+        let news = JSON.parse(localStorage.getItem("gsjNews")) || [
+            {
+                id: "natal2026",
+                category: "Natal",
+                title: "Natal Germita Syalom Jakarta 2026",
+                date: "6 Desember 2025",
+                image: "natal/natal.jpeg",
+                video: "",
+                gallery: ["natal/natal1.jpeg", "natal/natal2.jpeg"],
+                content: "Perayaan Natal penuh sukacita bersama seluruh keluarga Youth Germita Syalom Jakarta."
+            },
+            {
+                id: "paskah2026",
+                category: "Paskah",
+                title: "Paskah Germita Syalom Jakarta 2026",
+                date: "03 April 2026",
+                image: "paskah/paskah.jpeg",
+                video: "",
+                gallery: [],
+                content: "Perayaan kebangkitan Kristus bersama seluruh pemuda."
+            }
+        ];
 
-let currentId = null;
+        let currentCategory = "Semua";
 
-/* ===== RENDER GRID ===== */
-function render(){
-    let grid = document.getElementById("grid");
-    grid.innerHTML="";
+        /* ========================= RENDER NEWS ========================= */
+        function renderNews() {
+            const grid = document.getElementById("newsGrid");
+            const keyword = document.getElementById("searchInput").value.toLowerCase();
 
-    Object.keys(db).forEach(id=>{
-        let n = db[id];
+            grid.innerHTML = "";
 
-        grid.innerHTML += `
-        <div class="card" onclick="openNews('${id}')">
-            <img src="${n.img}">
-            <div class="card-content">
-                <h3>${n.title}</h3>
-                <p>${n.content.substring(0,80)}...</p>
-            </div>
-        </div>`;
-    });
-}
+            let filtered = news.filter(item => {
+                let matchCategory = currentCategory === "Semua" || item.category === currentCategory;
+                let matchKeyword = item.title.toLowerCase().includes(keyword) || item.content.toLowerCase().includes(keyword);
+                return matchCategory && matchKeyword;
+            });
 
-/* ===== OPEN NEWS ===== */
-function openNews(id){
-    currentId = id;
-    let n = db[id];
+            filtered.forEach(item => {
+                grid.innerHTML += `
+                    <div class="news-card" onclick="openArticle('${item.id}')">
+                        <img src="${item.image}" alt="${item.title}">
+                        <div class="news-content">
+                            <div class="news-category">${item.category}</div>
+                            <div class="news-title">${item.title}</div>
+                            <div class="news-date">${item.date}</div>
+                            <div class="news-text">${item.content.substring(0, 120)}...</div>
+                            <div class="read-more">Baca Selengkapnya →</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
 
-    document.getElementById("grid").style.display="none";
-    document.getElementById("detail").style.display="block";
+        /* ========================= OPEN ARTICLE ========================= */
+        function openArticle(id) {
+            const article = news.find(item => item.id === id);
+            if (!article) return;
 
-    document.getElementById("title").innerText = n.title;
-    document.getElementById("img").src = n.img;
-    document.getElementById("content").innerText = n.content;
+            document.getElementById("newsGrid").style.display = "none";
+            document.querySelector(".hero").style.display = "none";
+            document.querySelector(".search-section").style.display = "none";
+            document.querySelector(".categories").style.display = "none";
+            document.getElementById("articlePage").style.display = "block";
 
-    if(n.video){
-        document.getElementById("video").style.display="block";
-        document.getElementById("video").src = n.video;
-    }else{
-        document.getElementById("video").style.display="none";
-    }
-}
+            document.getElementById("articleTitle").innerText = article.title;
+            document.getElementById("articleMeta").innerText = article.category + " • " + article.date;
+            document.getElementById("articleImage").src = article.image;
+            document.getElementById("articleContent").innerHTML = article.content;
 
-/* ===== BACK ===== */
-function back(){
-    document.getElementById("grid").style.display="grid";
-    document.getElementById("detail").style.display="none";
-}
+            const video = document.getElementById("articleVideo");
+            if (article.video) {
+                video.style.display = "block";
+                video.src = article.video;
+            } else {
+                video.style.display = "none";
+            }
 
-/* ===== ADMIN ===== */
-function openAdmin(){
-    document.getElementById("admin").style.display="flex";
+            const gallery = document.getElementById("gallery");
+            gallery.innerHTML = "";
+            if (article.gallery) {
+                article.gallery.forEach(img => {
+                    gallery.innerHTML += `<img src="${img}" alt="Gallery image">`;
+                });
+            }
 
-    let n = db[currentId];
+            window.location.hash = article.id;
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
 
-    document.getElementById("t").value = n.title;
-    document.getElementById("i").value = n.img;
-    document.getElementById("v").value = n.video;
-    document.getElementById("c").value = n.content;
-}
+        /* ========================= BACK TO NEWS ========================= */
+        function backToNews() {
+            document.getElementById("articlePage").style.display = "none";
+            document.getElementById("newsGrid").style.display = "grid";
+            document.querySelector(".hero").style.display = "block";
+            document.querySelector(".search-section").style.display = "block";
+            document.querySelector(".categories").style.display = "flex";
 
-function closeAdmin(){
-    document.getElementById("admin").style.display="none";
-}
+            history.pushState("", document.title, window.location.pathname);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
 
-function save(){
-    db[currentId] = {
-        title:document.getElementById("t").value,
-        img:document.getElementById("i").value,
-        video:document.getElementById("v").value,
-        content:document.getElementById("c").value
-    };
+        /* ========================= LOGIN ADMIN ========================= */
+        function loginAdmin() {
+            const user = document.getElementById("adminUser").value;
+            const pass = document.getElementById("adminPass").value;
 
-    localStorage.setItem("newsDB", JSON.stringify(db));
-    render();
-    openNews(currentId);
-    closeAdmin();
-}
+            if (user === "admin" && pass === "gsj2026") {
+                document.getElementById("adminLogin").style.display = "none";
+                document.getElementById("adminPanel").style.display = "block";
+                alert("Login berhasil");
+            } else {
+                alert("Username atau Password salah");
+            }
+        }
 
-/* ===== ADMIN ACCESS VIA URL ===== */
-const params = new URLSearchParams(location.search);
-if(params.get("admin") === "gsj2026"){
-    document.getElementById("fab").style.display="block";
-}
+        /* ========================= SAVE NEWS ========================= */
+        function saveNews() {
+            let title = document.getElementById("newsTitle").value;
+            let category = document.getElementById("newsCategory").value;
+            let image = document.getElementById("newsImage").value;
+            let video = document.getElementById("newsVideo").value;
+            let content = document.getElementById("newsContent").value;
+            let galleryInput = document.getElementById("newsGallery").value;
 
-/* INIT */
-render();
+            if (!title || !content) {
+                alert("Judul dan Isi Artikel harus diisi!");
+                return;
+            }
 
-</script>
+            let gallery = galleryInput.split(",").map(i => i.trim()).filter(i => i);
 
+            let id = title.toLowerCase().replaceAll(" ", "-") + Date.now();
+
+            news.unshift({
+                id: id,
+                title: title,
+                category: category,
+                date: new Date().toLocaleDateString("id-ID"),
+                image: image,
+                video: video,
+                gallery: gallery,
+                content: content
+            });
+
+            localStorage.setItem("gsjNews", JSON.stringify(news));
+            renderNews();
+
+            document.getElementById("newsTitle").value = "";
+            document.getElementById("newsContent").value = "";
+            document.getElementById("newsImage").value = "";
+            document.getElementById("newsVideo").value = "";
+            document.getElementById("newsGallery").value = "";
+
+            alert("Berita berhasil disimpan");
+        }
+
+        /* ========================= EVENT LISTENERS ========================= */
+        document.addEventListener("DOMContentLoaded", function() {
+            // Search
+            document.getElementById("searchInput").addEventListener("keyup", renderNews);
+
+            // Categories
+            document.querySelectorAll(".categories button").forEach(btn => {
+                btn.addEventListener("click", function() {
+                    document.querySelectorAll(".categories button").forEach(b => b.classList.remove("active"));
+                    this.classList.add("active");
+                    currentCategory = this.dataset.category;
+                    renderNews();
+                });
+            });
+
+            // Admin Check
+            const params = new URLSearchParams(location.search);
+            if (params.has("admin")) {
+                document.getElementById("adminLogin").style.display = "flex";
+            }
+
+            // Initial Render & Hash Check
+            renderNews();
+            let hash = location.hash.replace("#", "");
+            if (hash) {
+                setTimeout(() => openArticle(hash), 200);
+            }
+        });
+    </script>
 </body>
 </html>
